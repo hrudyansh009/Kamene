@@ -1,101 +1,132 @@
-<!-- start_ppi_description -->
+# Kamene
 
-# <img src="https://github.com/secdev/scapy/raw/master/doc/scapy/graphics/scapy_logo.png" width="64" valign="middle" alt="Scapy" />&nbsp;&nbsp; Scapy
+Kamene is a lightweight network experimentation and tooling framework built on top of **Scapy**.
 
-[![Scapy unit tests](https://github.com/secdev/scapy/actions/workflows/unittests.yml/badge.svg?branch=master&event=push)](https://github.com/secdev/scapy/actions/workflows/unittests.yml?query=event%3Apush) <!-- ignore_ppi -->
-[![Codecov Status](https://codecov.io/gh/secdev/scapy/branch/master/graph/badge.svg)](https://codecov.io/gh/secdev/scapy) <!-- ignore_ppi -->
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/30ee6772bb264a689a2604f5cdb0437b)](https://app.codacy.com/gh/secdev/scapy/dashboard) <!-- ignore_ppi -->
-[![PyPI Version](https://img.shields.io/pypi/v/scapy.svg)](https://pypi.python.org/pypi/scapy/)
-[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](LICENSE)
-[![Join the chat at https://gitter.im/secdev/scapy](https://badges.gitter.im/secdev/scapy.svg)](https://gitter.im/secdev/scapy) <!-- ignore_ppi -->
+It focuses on practical packet crafting, traffic inspection, and custom network tool development — without the overhead of a full framework.
 
-Scapy is a powerful Python-based interactive packet manipulation program and
-library.
+> Status: Active development
 
-It is able to forge or decode packets of a wide number of protocols, send them
-on the wire, capture them, store or read them using pcap files, match requests
-and replies, and much more. It is designed to allow fast packet prototyping by
-using default values that work.
+---
 
-It can easily handle most classical tasks like scanning, tracerouting, probing,
-unit tests, attacks or network discovery (it can replace `hping`, 85% of `nmap`,
-`arpspoof`, `arp-sk`, `arping`, `tcpdump`, `wireshark`, `p0f`, etc.). It also
-performs very well at a lot of other specific tasks that most other tools can't
-handle, like sending invalid frames, injecting your own 802.11 frames, combining
-techniques (VLAN hopping+ARP cache poisoning, VoIP decoding on WEP protected
-channel, ...), etc.
+## Purpose
 
-Scapy supports Python 3.7+. It's intended to
-be cross platform, and runs on many different platforms (Linux, OSX,
-\*BSD, and Windows).
+Kamene is not a replacement for Scapy.  
+It is a structured project layer that uses Scapy to build:
 
-## Getting started
+- Custom packet sniffers
+- Targeted network scanners
+- Protocol analyzers
+- Packet manipulation utilities
+- Security research experiments
 
-Scapy is usable either as a **shell** or as a **library**.
-For further details, please head over to [Getting started with Scapy](https://scapy.readthedocs.io/en/latest/introduction.html), which is part of the documentation.
+The goal is to move from interactive testing to structured tooling.
 
-### Shell demo
+---
 
-![Scapy install demo](https://secdev.github.io/files/doc/animation-scapy-install.svg)
+## Why Kamene?
 
-Scapy can easily be used as an interactive shell to interact with the network.
-The following example shows how to send an ICMP Echo Request message to
-`github.com`, then display the reply source IP address:
+Scapy is powerful but raw.  
+Kamene adds:
 
-```python
-sudo ./run_scapy
-Welcome to Scapy
->>> p = IP(dst="github.com")/ICMP()
->>> r = sr1(p)
-Begin emission:
-.Finished to send 1 packets.
-*
-Received 2 packets, got 1 answers, remaining 0 packets
->>> r[IP].src
-'192.30.253.113'
-```
+- Organized project structure
+- Modular scripts
+- Reusable components
+- Clean experimentation workflow
+- Tool-ready architecture
 
-### Resources
+This makes it suitable for:
+- Cybersecurity learning
+- Network automation research
+- Red team lab experimentation
+- Protocol behavior analysis
 
-The [documentation](https://scapy.readthedocs.io/en/latest/) contains more
-advanced use cases, and examples.
+---
 
-Other useful resources:
+## Requirements
 
--   [Scapy in 20 minutes](https://github.com/secdev/scapy/blob/master/doc/notebooks/Scapy%20in%2015%20minutes.ipynb)
--   [Interactive tutorial](https://scapy.readthedocs.io/en/latest/usage.html#interactive-tutorial) (part of the documentation)
--   [The quick demo: an interactive session](https://scapy.readthedocs.io/en/latest/introduction.html#quick-demo) (some examples may be outdated)
--   [HTTP/2 notebook](https://github.com/secdev/scapy/blob/master/doc/notebooks/HTTP_2_Tuto.ipynb)
--   [TLS notebooks](https://github.com/secdev/scapy/blob/master/doc/notebooks/tls)
+- Python 3.10+
+- Scapy
+- Npcap (Windows) or libpcap (Linux)
+- Administrator / root privileges (for packet injection & sniffing)
 
-## [Installation](https://scapy.readthedocs.io/en/latest/installation.html)
+---
 
-Scapy works without any external Python modules on Linux and BSD like operating
-systems. On Windows, you need to install some mandatory dependencies as
-described in [the
-documentation](http://scapy.readthedocs.io/en/latest/installation.html#windows).
+## Installation
 
-On most systems, using Scapy is as simple as running the following commands:
-
+### 1. Clone repository
 ```bash
-git clone https://github.com/secdev/scapy
-cd scapy
-./run_scapy
-```
+git clone https://github.com/hrudyansh009/Kamene.git
+cd Kamene
+2. Create virtual environment
 
-To benefit from all Scapy features, such as plotting, you might want to install
-Python modules, such as `matplotlib` or `cryptography`. See the
-[documentation](http://scapy.readthedocs.io/en/latest/installation.html) and
-follow the instructions to install them.
+Windows
 
-<!-- stop_ppi_description -->
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install --upgrade pip
 
-## License
+Linux
 
-Scapy's code, tests and tools are licensed under GPL v2.
-The documentation (everything unless marked otherwise in `doc/`, and except the logo) is licensed under CC BY-NC-SA 2.5.
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+3. Install dependencies
+pip install scapy
 
-## Contributing
+(Optional)
 
-Want to contribute? Great! Please take a few minutes to
-[read this](CONTRIBUTING.md)!
+pip install matplotlib cryptography
+Usage
+
+Once your entry script is defined:
+
+python main.py
+
+Or run individual modules/scripts as needed.
+
+Project Structure (Planned)
+Kamene/
+│
+├── core/              # Core packet utilities
+├── modules/           # Scanners / sniffers / tools
+├── experiments/       # Lab experiments
+├── docs/              # Notes and research logs
+├── main.py            # Entry point
+└── README.md
+Ethical Notice
+
+Kamene is intended strictly for:
+
+Educational use
+
+Authorized security testing
+
+Research environments
+
+You are responsible for lawful usage.
+
+License
+
+This project depends on Scapy (GPL v2).
+Kamene code follows compatible licensing requirements.
+
+Credits
+
+Built using the Scapy packet manipulation library:
+https://github.com/secdev/scapy
+
+
+---
+
+Now clean your repo properly:
+
+1. Replace README.
+2. Commit.
+3. Push.
+
+```powershell
+git add README.md
+git commit -m "Rewrite README for Kamene project"
+git push
+
+Do it.
